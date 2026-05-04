@@ -1,184 +1,195 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>AnimeX</title>
 
 <style>
 body {
   margin:0;
-  font-family: Arial, sans-serif;
-  background:#141414;
+  background:#000;
+  font-family:Arial;
   color:white;
 }
 
 /* NAVBAR */
-header {
-  position:fixed;
-  width:100%;
-  top:0;
+.navbar {
   display:flex;
   justify-content:space-between;
   align-items:center;
-  padding:10px 15px;
-  background:linear-gradient(to bottom,rgba(0,0,0,0.9),transparent);
-  z-index:100;
+  padding:12px 20px;
+  background:linear-gradient(to bottom,#000,#111);
 }
 
-.logo img {height:35px;}
+.logo {
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+
+.x-box {
+  width:35px;
+  height:35px;
+  background:#111;
+  color:red;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border-radius:8px;
+  font-weight:bold;
+  box-shadow:0 0 10px red;
+}
+
+.logo h1 {
+  font-size:22px;
+}
+
+.logo span {
+  color:red;
+}
 
 .search {
-  padding:6px;
+  padding:6px 10px;
+  background:#111;
   border:none;
-  border-radius:5px;
+  color:white;
+  border-radius:6px;
 }
 
 /* HERO */
 .hero {
-  height:380px;
-  background:url("https://wallpaperaccess.com/full/37029.jpg") center/cover;
-  display:flex;
-  align-items:flex-end;
-  padding:20px;
   position:relative;
 }
 
-.hero::after {
-  content:"";
-  position:absolute;
-  bottom:0;
+.hero img {
   width:100%;
-  height:120px;
-  background:linear-gradient(to top,#141414,transparent);
+  height:300px;
+  object-fit:cover;
+  opacity:0.6;
 }
 
-.hero h1 {
-  z-index:1;
-  font-size:28px;
+.hero-text {
+  position:absolute;
+  bottom:30px;
+  left:20px;
+}
+
+.hero-text h2 {
+  font-size:30px;
+}
+
+/* SECTION */
+.section {
+  padding:20px;
+}
+
+.section h2 {
+  margin-bottom:10px;
 }
 
 /* ROW */
 .row {
-  margin-top:20px;
-  padding:10px;
-}
-
-.row h2 {
-  margin-left:5px;
-}
-
-/* SCROLL */
-.scroll {
   display:flex;
   overflow-x:auto;
-  scroll-behavior:smooth;
+  gap:12px;
 }
-
-.scroll::-webkit-scrollbar {display:none;}
 
 /* CARD */
 .card {
-  min-width:130px;
-  margin:8px;
+  min-width:150px;
+  background:#111;
+  border-radius:10px;
+  overflow:hidden;
   transition:0.3s;
 }
 
 .card img {
   width:100%;
-  height:180px;
+  height:200px;
   object-fit:cover;
-  border-radius:6px;
 }
 
-/* HOVER EFFECT */
+.card p {
+  padding:8px;
+}
+
 .card:hover {
-  transform:scale(1.2);
-  z-index:2;
-}
-
-.title {
-  font-size:13px;
-  margin-top:4px;
+  transform:scale(1.1);
 }
 </style>
+
 </head>
 
 <body>
 
-<header>
+<!-- NAVBAR -->
+<div class="navbar">
   <div class="logo">
-    <img src="logo.png">
+    <div class="x-box">X</div>
+    <h1>Anime<span>X</span></h1>
   </div>
 
-  <input class="search" id="search" placeholder="Search..." onkeyup="searchAnime()">
-</header>
+  <input class="search" placeholder="Search anime...">
+</div>
 
+<!-- HERO -->
 <div class="hero">
-  <h1>Watch Anime Now</h1>
+  <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e">
+  <div class="hero-text">
+    <h2>Watch Anime Now</h2>
+    <p>Unlimited anime streaming</p>
+  </div>
 </div>
 
-<!-- ROW 1 -->
-<div class="row">
-  <h2>Trending</h2>
-  <div class="scroll" id="list">
+<!-- TRENDING -->
+<div class="section">
+  <h2>🔥 Trending</h2>
+  <div class="row">
 
     <div class="card">
-      <img src="https://wallpaperaccess.com/full/37029.jpg">
-      <div class="title">Naruto</div>
+      <img src="https://i.imgur.com/5KCVkau.jpg">
+      <p>Naruto</p>
     </div>
 
     <div class="card">
-      <img src="https://wallpaperaccess.com/full/107685.jpg">
-      <div class="title">Death Note</div>
+      <img src="https://i.imgur.com/7b2k7ZL.jpg">
+      <p>Attack on Titan</p>
     </div>
 
     <div class="card">
-      <img src="https://wallpaperaccess.com/full/1791902.jpg">
-      <div class="title">Attack on Titan</div>
+      <img src="https://i.imgur.com/8Km9tLL.jpg">
+      <p>One Piece</p>
     </div>
 
     <div class="card">
-      <img src="https://wallpaperaccess.com/full/11362.jpg">
-      <div class="title">One Piece</div>
+      <img src="https://i.imgur.com/9yG3L9K.jpg">
+      <p>Death Note</p>
     </div>
 
   </div>
 </div>
 
-<!-- ROW 2 -->
-<div class="row">
-  <h2>Popular</h2>
-  <div class="scroll">
+<!-- POPULAR -->
+<div class="section">
+  <h2>⭐ Popular Anime</h2>
+  <div class="row">
 
     <div class="card">
-      <img src="https://wallpaperaccess.com/full/107685.jpg">
-      <div class="title">Tokyo Ghoul</div>
+      <img src="https://i.imgur.com/1.jpg">
+      <p>Demon Slayer</p>
     </div>
 
     <div class="card">
-      <img src="https://wallpaperaccess.com/full/1791902.jpg">
-      <div class="title">Demon Slayer</div>
+      <img src="https://i.imgur.com/2.jpg">
+      <p>Jujutsu Kaisen</p>
     </div>
 
     <div class="card">
-      <img src="https://wallpaperaccess.com/full/11362.jpg">
-      <div class="title">Jujutsu Kaisen</div>
+      <img src="https://i.imgur.com/3.jpg">
+      <p>Tokyo Revengers</p>
     </div>
 
   </div>
 </div>
-
-<script>
-function searchAnime() {
-  let input = document.getElementById("search").value.toLowerCase();
-  let cards = document.querySelectorAll(".card");
-
-  cards.forEach(card => {
-    let text = card.innerText.toLowerCase();
-    card.style.display = text.includes(input) ? "block" : "none";
-  });
-}
-</script>
 
 </body>
-</html>
+</html>        
