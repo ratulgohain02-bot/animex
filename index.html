@@ -1,85 +1,106 @@
-    <!DOCTYPE html>
+<!DOCTYPE html>
 <html>
 <head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>AnimeX</title>
 
 <style>
 body {
   margin:0;
-  font-family: Arial;
+  font-family: Arial, sans-serif;
   background:#141414;
   color:white;
 }
 
-/* HEADER */
+/* NAVBAR */
 header {
+  position:fixed;
+  width:100%;
+  top:0;
   display:flex;
   justify-content:space-between;
   align-items:center;
-  padding:10px 20px;
-  position:fixed;
-  width:100%;
+  padding:10px 15px;
   background:linear-gradient(to bottom,rgba(0,0,0,0.9),transparent);
-  z-index:10;
+  z-index:100;
 }
 
-/* LOGO */
-.logo img {
-  height:40px;
-}
+.logo img {height:35px;}
 
-/* SEARCH */
 .search {
   padding:6px;
-  border-radius:5px;
   border:none;
-  outline:none;
+  border-radius:5px;
 }
 
 /* HERO */
 .hero {
-  height:350px;
-  background:url("https://wallpaperaccess.com/full/854134.jpg") center/cover;
+  height:380px;
+  background:url("https://wallpaperaccess.com/full/37029.jpg") center/cover;
   display:flex;
-  flex-direction:column;
-  justify-content:flex-end;
+  align-items:flex-end;
   padding:20px;
+  position:relative;
+}
+
+.hero::after {
+  content:"";
+  position:absolute;
+  bottom:0;
+  width:100%;
+  height:120px;
+  background:linear-gradient(to top,#141414,transparent);
+}
+
+.hero h1 {
+  z-index:1;
+  font-size:28px;
 }
 
 /* ROW */
 .row {
-  padding:15px;
+  margin-top:20px;
+  padding:10px;
 }
 
+.row h2 {
+  margin-left:5px;
+}
+
+/* SCROLL */
 .scroll {
   display:flex;
   overflow-x:auto;
+  scroll-behavior:smooth;
 }
+
+.scroll::-webkit-scrollbar {display:none;}
 
 /* CARD */
 .card {
-  min-width:150px;
-  margin-right:10px;
+  min-width:130px;
+  margin:8px;
   transition:0.3s;
 }
 
 .card img {
   width:100%;
-  border-radius:8px;
+  height:180px;
+  object-fit:cover;
+  border-radius:6px;
 }
 
-/* HOVER */
+/* HOVER EFFECT */
 .card:hover {
-  transform:scale(1.15);
+  transform:scale(1.2);
+  z-index:2;
 }
 
-/* TITLE */
 .title {
-  font-size:14px;
-  margin-top:5px;
+  font-size:13px;
+  margin-top:4px;
 }
 </style>
-
 </head>
 
 <body>
@@ -89,36 +110,59 @@ header {
     <img src="logo.png">
   </div>
 
-  <input class="search" id="search" placeholder="Search anime..." onkeyup="searchAnime()">
+  <input class="search" id="search" placeholder="Search..." onkeyup="searchAnime()">
 </header>
 
 <div class="hero">
   <h1>Watch Anime Now</h1>
 </div>
 
+<!-- ROW 1 -->
 <div class="row">
-  <h2>Anime Series</h2>
-
-  <div class="scroll" id="animeList">
+  <h2>Trending</h2>
+  <div class="scroll" id="list">
 
     <div class="card">
-      <img src="https://wallpaperaccess.com/full/854129.jpg">
+      <img src="https://wallpaperaccess.com/full/37029.jpg">
       <div class="title">Naruto</div>
     </div>
 
     <div class="card">
-      <img src="https://wallpaperaccess.com/full/854134.jpg">
+      <img src="https://wallpaperaccess.com/full/107685.jpg">
       <div class="title">Death Note</div>
     </div>
 
     <div class="card">
-      <img src="https://wallpaperaccess.com/full/854129.jpg">
+      <img src="https://wallpaperaccess.com/full/1791902.jpg">
       <div class="title">Attack on Titan</div>
     </div>
 
     <div class="card">
-      <img src="https://wallpaperaccess.com/full/854134.jpg">
+      <img src="https://wallpaperaccess.com/full/11362.jpg">
       <div class="title">One Piece</div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ROW 2 -->
+<div class="row">
+  <h2>Popular</h2>
+  <div class="scroll">
+
+    <div class="card">
+      <img src="https://wallpaperaccess.com/full/107685.jpg">
+      <div class="title">Tokyo Ghoul</div>
+    </div>
+
+    <div class="card">
+      <img src="https://wallpaperaccess.com/full/1791902.jpg">
+      <div class="title">Demon Slayer</div>
+    </div>
+
+    <div class="card">
+      <img src="https://wallpaperaccess.com/full/11362.jpg">
+      <div class="title">Jujutsu Kaisen</div>
     </div>
 
   </div>
@@ -130,15 +174,11 @@ function searchAnime() {
   let cards = document.querySelectorAll(".card");
 
   cards.forEach(card => {
-    let title = card.innerText.toLowerCase();
-    if (title.includes(input)) {
-      card.style.display = "block";
-    } else {
-      card.style.display = "none";
-    }
+    let text = card.innerText.toLowerCase();
+    card.style.display = text.includes(input) ? "block" : "none";
   });
 }
 </script>
 
 </body>
-</html>  
+</html>
