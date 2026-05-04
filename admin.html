@@ -1,156 +1,38 @@
-<!DOCTYPE html>
-<html>
-<head>
-<title>AnimeX Admin</title>
+<h2>Add Episode</h2>
 
-<style>
-body {
-  margin:0;
-  font-family:Arial;
-  background:#000;
-  color:white;
-}
+<select id="animeSelect"></select>
 
-/* LOGIN BOX */
-.login-box {
-  max-width:300px;
-  margin:100px auto;
-}
+<input type="text" id="episodeTitle" placeholder="Episode Title">
+<input type="text" id="videoUrl" placeholder="Video URL (YouTube / MP4 link)">
 
-input, button {
-  width:100%;
-  padding:12px;
-  margin:8px 0;
-  border:none;
-  border-radius:5px;
-}
-
-input {
-  background:#222;
-  color:white;
-}
-
-button {
-  background:red;
-  color:white;
-  font-weight:bold;
-  cursor:pointer;
-}
-
-/* ADMIN PANEL */
-#adminPanel {
-  display:none;
-}
-
-.navbar {
-  padding:15px;
-  background:#111;
-  font-size:22px;
-  font-weight:bold;
-}
-
-.container {
-  padding:20px;
-}
-
-.card {
-  background:#111;
-  padding:10px;
-  margin-top:10px;
-  border-radius:5px;
-}
-</style>
-
-</head>
-
-<body>
-
-<!-- LOGIN -->
-<div class="login-box" id="loginBox">
-  <h2>Admin Login</h2>
-
-  <input type="text" id="email" placeholder="User ID / Email">
-  <input type="password" id="password" placeholder="Password">
-
-  <button onclick="login()">Login</button>
-</div>
-
-<!-- ADMIN PANEL -->
-<div id="adminPanel">
-
-<div class="navbar">
-  Anime<span style="color:red">X</span> Admin
-</div>
-
-<div class="container">
-
-<h2>Add Anime</h2>
-
-<input type="text" id="title" placeholder="Anime Title">
-<input type="text" id="image" placeholder="Image URL">
-<input type="text" id="year" placeholder="Year">
-<input type="text" id="episodes" placeholder="Episodes">
-
-<button onclick="addAnime()">Add Anime</button>
-
-<h2>Anime List</h2>
-<div id="list"></div>
-
-</div>
-
-</div>
+<button onclick="addEpisode()">Add Episode</button>
 
 <script>
+let animeData = JSON.parse(localStorage.getItem("animeData")) || [];
+let episodeData = JSON.parse(localStorage.getItem("episodeData")) || [];
 
-/* LOGIN SYSTEM */
-function login() {
-  let email = document.getElementById("email").value;
-  let password = document.getElementById("password").value;
+// load anime list
+const select = document.getElementById("animeSelect");
+animeData.forEach((anime, index) => {
+  let opt = document.createElement("option");
+  opt.value = index;
+  opt.text = anime.title;
+  select.appendChild(opt);
+});
 
-  if(email === "admin@animex.in" && password === "AnimeX@123") {
-    document.getElementById("loginBox").style.display = "none";
-    document.getElementById("adminPanel").style.display = "block";
-  } else {
-    alert("Wrong ID or Password");
-  }
-}
+function addEpisode() {
+  const animeIndex = select.value;
+  const title = document.getElementById("episodeTitle").value;
+  const video = document.getElementById("videoUrl").value;
 
-/* ADD ANIME */
-function addAnime() {
-  let title = document.getElementById("title").value;
-  let image = document.getElementById("image").value;
-  let year = document.getElementById("year").value;
-  let episodes = document.getElementById("episodes").value;
-
-  let anime = {title, image, year, episodes};
-
-  let data = JSON.parse(localStorage.getItem("animeList")) || [];
-  data.push(anime);
-  localStorage.setItem("animeList", JSON.stringify(data));
-
-  showAnime();
-}
-
-/* SHOW LIST */
-function showAnime() {
-  let data = JSON.parse(localStorage.getItem("animeList")) || [];
-  let list = document.getElementById("list");
-  list.innerHTML = "";
-
-  data.forEach(a => {
-    list.innerHTML += `
-      <div class="card">
-        <h3>${a.title}</h3>
-        <img src="${a.image}" width="100%">
-        <p>${a.year} • ${a.episodes} eps</p>
-      </div>
-    `;
+  episodeData.push({
+    animeIndex,
+    title,
+    video
   });
+
+  localStorage.setItem("episodeData", JSON.stringify(episodeData));
+
+  alert("Episode added 🔥");
 }
-
-showAnime();
-
 </script>
-
-</body>
-</html>
