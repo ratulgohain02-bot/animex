@@ -16,31 +16,13 @@ body {
   display:flex;
   justify-content:space-between;
   align-items:center;
-  padding:12px 20px;
-  background:linear-gradient(to bottom,#000,#111);
+  padding:15px;
+  background:#111;
 }
 
 .logo {
-  display:flex;
-  align-items:center;
-  gap:8px;
-}
-
-.x-box {
-  width:35px;
-  height:35px;
-  background:#111;
-  color:red;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  border-radius:8px;
-  font-weight:bold;
-  box-shadow:0 0 10px red;
-}
-
-.logo h1 {
   font-size:22px;
+  font-weight:bold;
 }
 
 .logo span {
@@ -48,58 +30,42 @@ body {
 }
 
 .search {
-  padding:6px 10px;
-  background:#111;
+  padding:8px;
+  border-radius:5px;
   border:none;
-  color:white;
-  border-radius:6px;
 }
 
 /* HERO */
 .hero {
-  position:relative;
+  height:200px;
+  background:url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e') center/cover;
+  display:flex;
+  align-items:end;
+  padding:20px;
+  font-size:24px;
+  font-weight:bold;
 }
 
-.hero img {
-  width:100%;
-  height:300px;
-  object-fit:cover;
-  opacity:0.6;
-}
-
-.hero-text {
-  position:absolute;
-  bottom:30px;
-  left:20px;
-}
-
-.hero-text h2 {
-  font-size:30px;
-}
-
-/* SECTION */
-.section {
+/* GRID */
+.container {
   padding:20px;
 }
 
-.section h2 {
-  margin-bottom:10px;
+.grid {
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(150px,1fr));
+  gap:15px;
 }
 
-/* ROW */
-.row {
-  display:flex;
-  overflow-x:auto;
-  gap:12px;
-}
-
-/* CARD */
 .card {
-  min-width:150px;
   background:#111;
   border-radius:10px;
   overflow:hidden;
   transition:0.3s;
+}
+
+.card:hover {
+  transform:scale(1.05);
 }
 
 .card img {
@@ -108,12 +74,9 @@ body {
   object-fit:cover;
 }
 
-.card p {
-  padding:8px;
-}
-
-.card:hover {
-  transform:scale(1.1);
+.card h3 {
+  padding:10px;
+  font-size:14px;
 }
 </style>
 
@@ -121,75 +84,52 @@ body {
 
 <body>
 
-<!-- NAVBAR -->
 <div class="navbar">
-  <div class="logo">
-    <div class="x-box">X</div>
-    <h1>Anime<span>X</span></h1>
-  </div>
-
-  <input class="search" placeholder="Search anime...">
+  <div class="logo">Anime<span>X</span></div>
+  <input class="search" id="search" placeholder="Search anime..." onkeyup="searchAnime()">
 </div>
 
-<!-- HERO -->
 <div class="hero">
-  <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e">
-  <div class="hero-text">
-    <h2>Watch Anime Now</h2>
-    <p>Unlimited anime streaming</p>
-  </div>
+  Watch Anime Now
 </div>
 
-<!-- TRENDING -->
-<div class="section">
-  <h2>🔥 Trending</h2>
-  <div class="row">
-
-    <div class="card">
-      <img src="https://i.imgur.com/5KCVkau.jpg">
-      <p>Naruto</p>
-    </div>
-
-    <div class="card">
-      <img src="https://i.imgur.com/7b2k7ZL.jpg">
-      <p>Attack on Titan</p>
-    </div>
-
-    <div class="card">
-      <img src="https://i.imgur.com/8Km9tLL.jpg">
-      <p>One Piece</p>
-    </div>
-
-    <div class="card">
-      <img src="https://i.imgur.com/9yG3L9K.jpg">
-      <p>Death Note</p>
-    </div>
-
-  </div>
+<div class="container">
+  <h2>Anime List</h2>
+  <div class="grid" id="animeList"></div>
 </div>
 
-<!-- POPULAR -->
-<div class="section">
-  <h2>⭐ Popular Anime</h2>
-  <div class="row">
+<script>
 
-    <div class="card">
-      <img src="https://i.imgur.com/1.jpg">
-      <p>Demon Slayer</p>
-    </div>
+let allAnime = JSON.parse(localStorage.getItem("animeList")) || [];
 
-    <div class="card">
-      <img src="https://i.imgur.com/2.jpg">
-      <p>Jujutsu Kaisen</p>
-    </div>
+function showAnime(data) {
+  let container = document.getElementById("animeList");
+  container.innerHTML = "";
 
-    <div class="card">
-      <img src="https://i.imgur.com/3.jpg">
-      <p>Tokyo Revengers</p>
-    </div>
+  data.forEach(a => {
+    container.innerHTML += `
+      <div class="card">
+        <img src="${a.image}">
+        <h3>${a.title}</h3>
+      </div>
+    `;
+  });
+}
 
-  </div>
-</div>
+/* SEARCH */
+function searchAnime() {
+  let value = document.getElementById("search").value.toLowerCase();
+
+  let filtered = allAnime.filter(a =>
+    a.title.toLowerCase().includes(value)
+  );
+
+  showAnime(filtered);
+}
+
+showAnime(allAnime);
+
+</script>
 
 </body>
-</html>        
+</html>
